@@ -1,0 +1,15 @@
+
+hid      hname                hstate final_score
+"450348" "FALLS COMMUNITY ... "TX"   315.5833333333333
+"450875" "QUAIL CREEK SURG... "TX"   199.66666666666666
+"520194" "ORTHOPAEDIC HOSP... "WI"   198.63636363636363
+"430091" "BLACK HILLS SURG... "SD"   198.25
+"430092" "DAKOTA PLAINS SU... "SD"   198.08333333333334
+"420102" "GHS PATEWOOD MEM... "SC"   197.8181818181818
+"170190" "MANHATTAN SURGIC... "KS"   197.8
+"340049" "NORTH CAROLINA S... "NC"   197.63636363636363
+"050697" "PATIENTS' HOSPIT... "CA"   197.54545454545453
+"110200" "NORTHSIDE MEDICA... "GA"   197.30769230769232
+>>>
+
+These are the top 10 hospitals based on average of Timely_and_Effective_Care score + survey base_score + survey consistency score. As the actual medical actions quality and patient exeperience are the two major important factor when considering hospital quality. This takes into account the consistency and score across all procedures.

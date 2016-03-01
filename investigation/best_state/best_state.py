@@ -51,7 +51,7 @@ schemasurveys = sqlContext.createDataFrame(surveys_table, surveyschema)
 schemasurveys.registerTempTable('surveys_table')
 
 
-procedure_join_survey = 'SELECT provides_table.hid, provides_table.hname, provides_table.hstate, AVG(provides_table.effective_score + surveys_table.base_score + surveys_table.consistency_score) AS final_score FROM provides_table INNER JOIN surveys_table ON provides_table.hid = surveys_table.hid GROUP BY provides_table.hid, provides_table.hname, provides_table.hstate ORDER BY final_score DESC LIMIT 10'
+procedure_join_survey = 'SELECT provides_table.hstate, AVG(provides_table.effective_score + surveys_table.base_score + surveys_table.consistency_score) AS final_score FROM provides_table INNER JOIN surveys_table ON provides_table.hid = surveys_table.hid GROUP BY provides_table.hstate ORDER BY final_score DESC LIMIT 10'
 
-hospital_result = sqlContext.sql(procedure_join_survey)
-hospital_result.show()
+state_result = sqlContext.sql(procedure_join_survey)
+state_result.show()

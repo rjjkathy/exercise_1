@@ -1,0 +1,13 @@
+hstate final_score
+"ME"   147.75680272108843
+"VT"   145.06572769953053
+"NH"   144.92688172043012
+"HI"   144.8523316062176
+"WI"   144.33958724202625
+"LA"   143.49592326139089
+"SD"   142.96774193548387
+"SC"   142.5960303561004
+"IN"   141.8567649281935
+"NC"   141.7148409893993
+
+These are the top 10 states based on aggregated average score of Timely_and_Effective_Care score + survey base_score + survey consistency score. As the actual medical actions quality and patient exeperience are the two major important factor when considering hospital quality. This takes into account the consistency and score across all procedures.

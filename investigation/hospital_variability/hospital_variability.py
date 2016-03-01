@@ -1,4 +1,5 @@
 from pyspark.sql import SQLContext
+from pyspark.sql import HiveContext
 from pyspark.sql.types import *
 from pyspark import SparkContext
 sc = SparkContext("local", "Simple App")
@@ -33,25 +34,18 @@ dfProvides = sqlContext.createDataFrame(provides_table, providesschema)
 dfProvides.registerTempTable('provides_table')
 
 
-surveys = sc.textFile('/user/w205/hospital_compare/surveys_responses.csv')
-surveyfiltered = surveys.filter(lambda x: "Not Available" not in x)
+procedures = sc.textFile('/user/w205/hospital_compare/measures.csv')
+filtered = procedures.filter(lambda x: "Not Available" not in x)
+parts = filtered.map(lambda l: l.split(','))
 
-surveyparts1 = surveyfiltered.map(lambda l: l.split(','))
-surveyparts = surveyparts1.filter(lambda l: len(l) is 33)
+procedures_table = parts.map(lambda p: (p[0], p[1]))
+schemaString = 'pname pid'
+fields = [StructField(field_name, StringType(), True) for field_name in schemaString.split()]
+schema = StructType(fields)
+schemaProcedures = sqlContext.createDataFrame(procedures_table, schema)
+schemaProcedures.registerTempTable('procedures_table')
 
-surveys_table = surveyparts.map(lambda l: ('hcahps', l[0], int(l[31].strip('"')), int(l[32].strip('"'))))
-schemaString = 'sid hid base_score consistency_score'
- 
-surveyfields = [StructField(field_name, StringType(), True) for field_name in schemaString.split()]
-surveyfields[2].dataType = IntegerType()
-surveyfields[3].dataType = IntegerType()
+procedure_join_provides = 'SELECT provides_table.pid, procedures_table.pname, AVG(provides_table.effective_score*provides_table.effective_score) - AVG(provides_table.effective_score)*AVG(provides_table.effective_score) AS variance FROM provides_table INNER JOIN procedures_table ON provides_table.pid = procedures_table.pid GROUP BY provides_table.pid, procedures_table.pname ORDER BY variance DESC LIMIT 10'
 
-surveyschema = StructType(surveyfields)
-schemasurveys = sqlContext.createDataFrame(surveys_table, surveyschema)
-schemasurveys.registerTempTable('surveys_table')
-
-
-procedure_join_survey = 'SELECT provides_table.hid, provides_table.hname, provides_table.hstate, AVG(provides_table.effective_score + surveys_table.base_score + surveys_table.consistency_score) AS final_score FROM provides_table INNER JOIN surveys_table ON provides_table.hid = surveys_table.hid GROUP BY provides_table.hid, provides_table.hname, provides_table.hstate ORDER BY final_score DESC LIMIT 10'
-
-hospital_result = sqlContext.sql(procedure_join_survey)
-hospital_result.show()
+procedureVar_result = sqlContext.sql(procedure_join_provides)
+procedureVar_result.show()

@@ -1,0 +1,15 @@
+
+pid      pname                variance
+"ED_1b"  "Median Time from... 8390.319729913143
+"ED_2b"  "Admit Decision T... 3873.3519483524124
+"OP_18b" "Median Time from... 1599.8222575479704
+"OP_3b"  "Median Time to T... 846.7562385396782
+"STK_4"  "Thrombolytic The... 481.1504469651445
+"OP_23"  "Head CT Scan Res... 477.2861332692364
+"AMI_7a" "Fibrinolytic The... 352.6666666666665
+"OP_2"   "Fibrinolytic The... 318.51904655825365
+"OP_21"  "Median Time to P... 311.75465115978295
+"OP_20"  "Median Time from... 279.64900493168443
+
+
+These are the procedures with greatest variance among hospitals based on the effectiveness score for each procedure.

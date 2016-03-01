@@ -1,0 +1,27 @@
+
+hid      ratio
+"330202" 126.7948717948718
+"050228" 35.72549019607843
+"330027" 31.54954954954955
+"140068" 31.236842105263158
+"090008" 30.523809523809522
+"050320" 26.76388888888889
+"330240" 25.566176470588236
+"290007" 25.0
+"140177" 22.8452380952381
+"050276" 21.44848484848485
+"050038" 20.36
+"330180" 19.155
+"330199" 18.725714285714286
+"050763" 18.16470588235294
+"050727" 18.1
+"450379" 17.741935483870968
+"330234" 17.203703703703706
+"050305" 15.972222222222221
+"030073" 15.160714285714286
+"140124" 14.887445887445889
+>>>
+
+
+
+If we look at the top ratio of hospital quality / survey response, ideally if they are perfectly correlated, the ratio should be pretty costant, however from the result there seems to be great variability between ratios, which indicates that there is not very strong correlation relation between hospital quality and survey responses.

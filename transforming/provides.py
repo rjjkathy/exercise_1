@@ -23,12 +23,12 @@ def processData(x):
         value = int(x)
         return value
 
-provides_table = providesparts.map(lambda l : (l[0], l[4], l[9], processData(l[11].strip('"'))))
+provides_table = providesparts.map(lambda l : (l[0], l[1] l[4], l[9], processData(l[11].strip('"'))))
 
-providesschemaString = 'hid hstate pid effective_score'
+providesschemaString = 'hid hname hstate pid effective_score'
  
 providesfields = [StructField(field_name, StringType(), True) for field_name in providesschemaString.split()]
-providesfields[3].dataType = IntegerType()
+providesfields[4].dataType = IntegerType()
 
 providesschema = StructType(providesfields)
 dfProvides = sqlContext.createDataFrame(provides_table, providesschema)
@@ -37,4 +37,4 @@ dfProvides.registerTempTable('provides_table')
 # save files
 provides_table.saveAsTextFile('/user/w205/hospital_compare/provides_table')
 providesshemaResult = sc.parallelize(dfProvides)
-providesshemaResult.saveAsTextFile('/user/w205/hospital_compare/surveys_schema')
+providesshemaResult.saveAsTextFile('/user/w205/hospital_compare/provides_schema')
