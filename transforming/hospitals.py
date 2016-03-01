@@ -1,6 +1,9 @@
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
+from pyspark import SparkContext
+sc = SparkContext("local", "Simple App")
 sqlContext = SQLContext(sc)
+
 hospitals = sc.textFile('/user/w205/hospital_compare/hospitals.csv')
 
 hospitalsfiltered = hospitals.filter(lambda x: "Not Available" not in x)

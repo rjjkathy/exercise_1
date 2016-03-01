@@ -30,6 +30,11 @@ hdfs dfs -put ./readmissions.csv /user/w205/hospital_compare
 hdfs dfs -put ./effective_care.csv  /user/w205/hospital_compare
 hdfs dfs -put ./surveys_responses.csv /user/w205/hospital_compare
 hdfs dfs -put ./measures.csv /user/w205/hospital_compare
-hdfs dfs -put ./hive_base_ddl.sql /user/w205/hospital_compare
+hdfs dfs -put ./tahive_base_ddl.sql /user/w205/hospital_compare
 
-
+# get the py scripts into hdfs
+git clone https://github.com/rjjkathy/exercise_1.git
+hdfs dfs -put ./exercise_1/transforming/* /user/w205/hospital_compare
+# remove previously saved files in case py scripts rerun later
+hdfs dfs -rm -r  /user/w205/hospital_compare/*_table
+hdfs dfs -rm -r  /user/w205/hospital_compare/*_schema

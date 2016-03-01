@@ -1,5 +1,8 @@
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
+from pyspark import SparkContext
+sc = SparkContext("local", "Simple App")
+
 sqlContext = SQLContext(sc)
 
 procedures = sc.textFile('/user/w205/hospital_compare/measures.csv')

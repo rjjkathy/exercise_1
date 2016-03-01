@@ -1,6 +1,8 @@
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
 from random import randint
+from pyspark import SparkContext
+sc = SparkContext("local", "Simple App")
 
 sqlContext = SQLContext(sc)
 
