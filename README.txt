@@ -1,5 +1,4 @@
 Steps to run:
-
 	1. start hadoop in UCB complete AMI
 	2. start postgres
 	3. run load_data_lake.sh which gets the data, rename and removes head, then put into hdfs
