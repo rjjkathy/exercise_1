@@ -5,11 +5,10 @@ from random import randint
 sqlContext = SQLContext(sc)
 
 provides = sc.textFile('/user/w205/hospital_compare/effective_care.csv')
-filtered = provides.filter(lambda x: ("Not Available" not in x ) )
+providesfiltered = provides.filter(lambda x: ("Not Available" not in x ) )
 
-parts1 = filtered.map(lambda l: l.split(','))
-parts = parts1.filter(lambda l: len(l) is 16)
-parts.count()
+providesparts1 = providesfiltered.map(lambda l: l.split(','))
+providesparts = providesparts1.filter(lambda l: len(l) is 16)
 
 def processData(x): 
     if "High (40,000 - 59,999 patients annually)" in x:
@@ -22,18 +21,18 @@ def processData(x):
         value = int(x)
         return value
 
-provides_table = parts.map(lambda l : (l[0], l[4], l[9], processData(l[11].strip('"'))))
+provides_table = providesparts.map(lambda l : (l[0], l[4], l[9], processData(l[11].strip('"'))))
 
-schemaString = 'hid hstate pid effective_score'
+providesschemaString = 'hid hstate pid effective_score'
  
-fields = [StructField(field_name, StringType(), True) for field_name in schemaString.split()]
-fields[3].dataType = IntegerType()
+providesfields = [StructField(field_name, StringType(), True) for field_name in providesschemaString.split()]
+providesfields[3].dataType = IntegerType()
 
-schema = StructType(fields)
-schemaProvides = sqlContext.createDataFrame(provides_table, schema)
-schemaProvides.registerTempTable('provides_table')
+providesschema = StructType(providesfields)
+dfProvides = sqlContext.createDataFrame(provides_table, providesschema)
+dfProvides.registerTempTable('provides_table')
 
 # save files
 provides_table.saveAsTextFile('/user/w205/hospital_compare/provides_table')
-shemaResult = sc.parallelize(schemaProvides)
-shemaResult.saveAsTextFile('/user/w205/hospital_compare/provides_schema')
+providesshemaResult = sc.parallelize(dfProvides)
+providesshemaResult.saveAsTextFile('/user/w205/hospital_compare/surveys_schema')

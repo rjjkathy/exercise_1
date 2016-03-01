@@ -4,22 +4,25 @@ from pyspark.sql.types import *
 sqlContext = SQLContext(sc)
 
 surveys = sc.textFile('/user/w205/hospital_compare/surveys_responses.csv')
-filtered = surveys.filter(lambda x: "Not Available" not in x)
+surveyfiltered = surveys.filter(lambda x: "Not Available" not in x)
 
-parts1 = filtered.map(lambda l: l.split(','))
-parts = parts1.filter(lambda l: len(l) is 33)
+surveyparts1 = surveyfiltered.map(lambda l: l.split(','))
+surveyparts = surveyparts1.filter(lambda l: len(l) is 33)
 
-surveys_table = parts.map(lambda l: ('hcahps', l[0], int(l[31].strip('"')), int(l[32].strip('"'))))
+surveys_table = surveyparts.map(lambda l: ('hcahps', l[0], int(l[31].strip('"')), int(l[32].strip('"'))))
 
 schemaString = 'sid hid base_score consistency_score'
  
-fields = [StructField(field_name, StringType(), True) for field_name in schemaString.split()]
-fields[2].dataType = IntegerType()
-fields[3].dataType = IntegerType()
+surveyfields = [StructField(field_name, StringType(), True) for field_name in schemaString.split()]
+surveyfields[2].dataType = IntegerType()
+surveyfields[3].dataType = IntegerType()
 
-schema = StructType(fields)
-schemasurveys = sqlContext.createDataFrame(surveys_table, schema)
+surveyschema = StructType(surveyfields)
+schemasurveys = sqlContext.createDataFrame(surveys_table, surveyschema)
 schemasurveys.registerTempTable('surveys_table')
+
+
+
 
 # save files
 surveys_table.saveAsTextFile('/user/w205/hospital_compare/surveys_table')
